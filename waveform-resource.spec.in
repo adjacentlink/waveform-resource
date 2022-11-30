@@ -1,0 +1,115 @@
+%define with_python2 %{?_with_python2:1}%{!?_with_python2:0}
+
+Summary: Waveform Resource Application Framework
+Name: waveform-resource
+Version: @VERSION@
+Release: 1%{?dist}
+License: BSD
+Group: Development/Libraries
+URL: https://github.com/adjacentlink/waveform-resource
+Source0: %{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+Vendor: Adjacent Link LLC
+BuildArch: noarch
+
+%define with_old_depends 0%{?el7}
+%define with_pathfix 0%{!?el7:1}
+
+%global _description \
+Waveform Resource application framework focused on lightweight \
+UDP, TCP, and Multicast socket communication channels.
+
+%description %{_description}
+Waveform Resource Application Framework
+
+%if %{with_python2}
+%package -n python2-%{name}
+Summary: %{summary}
+%if 0%{?with_old_depends}
+BuildRequires: python-devel
+Requires: python-setuptools
+Requires: python-daemon
+Requires: python-sortedcontainers
+%else
+BuildRequires: python2-devel
+Requires: python2-setuptools
+Requires: python2-daemon
+Requires: python2-sortedcontainers
+%endif
+%{?python_provide:%python_provide python2-%{name}}
+%define use_python2_sitelib %{python2_sitelib}
+%description -n python2-%{name} %{_description}
+%else
+%package -n python3-%{name}
+Summary: %{summary}
+BuildRequires: python3-devel
+Requires: python3-sortedcontainers
+Requires: python3-daemon
+%{?python_provide:%python_provide python3-%{name}}
+%description -n python3-%{name} %{_description}
+%endif
+
+%prep
+%setup -q
+
+%build
+%if %{with_python2}
+%configure --with-python2
+%else
+%configure
+%endif
+make
+
+%install
+%if %{with_python2}
+make DESTDIR=${RPM_BUILD_ROOT} PYTHON=%{__python2} install
+%else
+make DESTDIR=${RPM_BUILD_ROOT} PYTHON=%{__python3} install
+%endif
+
+find ${RPM_BUILD_ROOT} -name '*.a' -exec rm '{}'  \;
+find ${RPM_BUILD_ROOT} -name '*.la' -exec rm '{}' \;
+mkdir -p ${RPM_BUILD_ROOT}%{_pkgdocdir}
+install -t ${RPM_BUILD_ROOT}%{_pkgdocdir} AUTHORS %{!?_licensedir:COPYING} ChangeLog NEWS README SPONSOR
+%if 0%{?_licensedir:1}
+mkdir -p ${RPM_BUILD_ROOT}%{_licensedir}/%{name}
+install -t ${RPM_BUILD_ROOT}%{_licensedir}/%{name} COPYING
+%endif
+
+%if %{with_pathfix}
+%if %{with_python2}
+pathfix.py -pni "%{__python2} %{py2_shbang_opts}" %{buildroot}%{_bindir}/*
+%else
+pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{_bindir}/*
+%endif
+%endif
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post
+
+%postun
+
+%if %{with_python2}
+%files -n python2-%{name}
+%defattr(-,root,root,-)
+%{_bindir}/waveform-resourced
+%{use_python2_sitelib}/*
+%doc %{_pkgdocdir}
+%if 0%{?_licensedir:1}
+%dir %{_licensedir}/%{name}
+%license %{_licensedir}/%{name}/COPYING
+%endif
+
+%else
+%files -n python3-%{name}
+%defattr(-,root,root,-)
+%{_bindir}/waveform-resourced
+%{python3_sitelib}/*
+%doc %{_pkgdocdir}
+%if 0%{?_licensedir:1}
+%dir %{_licensedir}/%{name}
+%license %{_licensedir}/%{name}/COPYING
+%endif
+%endif
