@@ -1,0 +1,31 @@
+# autotools
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+config.log
+config.status
+configure
+install-sh
+missing
+
+# protocol buffers output
+*_pb2.py
+
+# python byte code
+*.pyc
+
+# dist
+waveform-resource-*.tar.gz
+
+# python
+build
+dist
+setup.py
+
+# rpm
+waveform-resource.spec
+.rpmbuild
+
+# deb
+.debbuild
