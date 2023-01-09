@@ -32,7 +32,7 @@
  See toplevel COPYING for more information.
 ])
 
-AC_INIT([waveform-resource],0.2.5,[labs at adjacentlink dot com])
+AC_INIT([waveform-resource],[0.2.5],[labs at adjacentlink dot com])
 
 AC_CONFIG_SRCDIR([waveform_resource])
 
@@ -42,7 +42,7 @@ AM_INIT_AUTOMAKE([])
 
 AC_PROG_INSTALL
 
-AM_PATH_PYTHON([2.7])
+AM_PATH_PYTHON([3.6])
 
 LANG=C
 AC_SUBST(LANG)
@@ -55,6 +55,6 @@ AM_CONDITIONAL(HAVE_RPMBUILD,$HAVE_RPMBUILD)
 AC_CHECK_PROG(HAVE_DEB, dh_clean, true, false)
 AM_CONDITIONAL(HAVE_DEB,$HAVE_DEB)
 
-AC_OUTPUT(
- Makefile
-)
+AC_CONFIG_FILES([Makefile
+])
+AC_OUTPUT
