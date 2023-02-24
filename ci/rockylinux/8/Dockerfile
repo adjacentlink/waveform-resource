@@ -1,4 +1,4 @@
-FROM rockylinux:8.5
+FROM rockylinux:8
 
 RUN mkdir -p /opt/built
 
@@ -10,7 +10,7 @@ RUN dnf config-manager --set-enabled powertools
 WORKDIR /opt
 
 # Build tools
-RUN dnf -y install git make autoconf automake libtool rpm-build python3-setuptools
+RUN dnf -y install git make autoconf automake libtool rpm-build python3-setuptools python3-devel
 
 RUN git clone https://github.com/adjacentlink/waveform-resource -b develop
 

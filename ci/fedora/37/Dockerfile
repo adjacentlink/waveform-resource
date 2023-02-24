@@ -8,7 +8,7 @@ RUN dnf -y update
 WORKDIR /opt
 
 # Build tools
-RUN dnf -y install git make autoconf automake libtool rpm-build python3-setuptools
+RUN dnf -y install git make autoconf automake libtool rpm-build python3-setuptools python3-devel
 
 RUN git clone https://github.com/adjacentlink/waveform-resource -b develop
 
