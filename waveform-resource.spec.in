@@ -46,7 +46,7 @@ mkdir -p ${RPM_BUILD_ROOT}%{_licensedir}/%{name}
 install -t ${RPM_BUILD_ROOT}%{_licensedir}/%{name} COPYING
 %endif
 
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{_bindir}/*
+%py3_shebang_fix %{buildroot}%{_bindir}/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
