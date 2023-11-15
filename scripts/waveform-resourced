@@ -174,8 +174,8 @@ if args['log_file'] != None:
 
 with daemon.DaemonContext(pidfile=pid_file_context,
                           detach_process=args['daemonize'],
-                          signal_map={signal.SIGTERM:shutdown_handler,
-                                      signal.SIGINT:shutdown_handler},
+                          signal_map={signal.SIGINT:shutdown_handler,
+                                      signal.SIGQUIT:shutdown_handler},
                           stdout=None if args['daemonize'] else sys.stdout,
                           stderr=None if args['daemonize'] else sys.stderr):
     try:

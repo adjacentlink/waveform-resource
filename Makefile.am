@@ -34,6 +34,7 @@ clean-local: setup.py
 	-rm -f $(PACKAGE).spec
 	-rm -f .installedfiles
 	-rm -rf .rpmbuild
+	-rm -rf .debbuild
 
 DISTCLEANFILES=setup.py
 

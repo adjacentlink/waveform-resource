@@ -58,6 +58,10 @@ class UDPChannel(Channel):
             receive. Callable passed 3 parameters: context (obj),
             channel id (int), and data (str).
 
+            Callable passed 1 keyword argument:
+
+                remote ((str,int)): Remote address and port.
+
         Raises:
             KeyError: If an invalid keyword is found.
 
@@ -116,11 +120,11 @@ class UDPChannel(Channel):
         """Reads from the channel and calls on_message callable.
 
         """
-        data,_ = self.__socket.recvfrom(65535)
+        data,remote = self.__socket.recvfrom(65535)
 
         if len(data):
             try:
-                self.__on_message(self.ctx,self.id,data)
+                self.__on_message(self.ctx,self.id,data,remote=remote)
             except:
                 logging.error(traceback.format_exc())
 

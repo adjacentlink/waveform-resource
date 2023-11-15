@@ -6,8 +6,9 @@ Build-Depends: debhelper (>= 8.0.0), dh-python
 Standards-Version: 3.9.3
 Homepage: https://adjacentlink.com
 
-Package: waveform-resource
+Package: python3-waveform-resource
 Section: python
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends}
+Replaces: waveform-resource
 Description: Waveform Resource Application Framework
