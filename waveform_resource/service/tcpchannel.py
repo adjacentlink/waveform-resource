@@ -54,9 +54,10 @@ class TCPServerChannel(Channel):
           local_port (int): Listen port.
 
           on_accept (callable): Callable object invoked on connection
-            accept.  Callable passed 3 parameters: context (obj),
+            accept.  Callable passed 4 parameters: context (obj),
             channel id (int), and remote address and port tuple
-            ((str,int)).
+            ((str,int)) and the associated socket (socket)
+            passed in kwargs as {'remote': socket}.
 
           on_message (callable): Callable object invoked on message
             receive. Callable passed 3 parameters: context (obj),
@@ -135,7 +136,7 @@ class TCPServerChannel(Channel):
         self.__remotes[address] = remote
 
         try:
-            self.__on_accept(self.ctx,self.id,address)
+            self.__on_accept(self.ctx,self.id,address,**{'remote':remote})
         except:
             logging.error(traceback.format_exc())
 
