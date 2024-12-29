@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 RUN mkdir -p /opt/built
 
@@ -22,4 +22,3 @@ RUN cp $(find .debbuild -name "*\.deb") /opt/built
 RUN dpkg -i /opt/built/*; apt-get -y install -f
 
 RUN echo 'complete'
-
