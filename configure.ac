@@ -1,5 +1,5 @@
 %AC_COPYRIGHT([
- Copyright (c) 2018-2020,2022-2023 - Adjacent Link LLC, Bridgewater,
+ Copyright (c) 2018-2020,2022-2024 - Adjacent Link LLC, Bridgewater,
   New Jersey
  All rights reserved.
 
@@ -33,7 +33,7 @@
  See toplevel COPYING for more information.
 ])
 
-AC_INIT([waveform-resource],[0.2.6],[labs at adjacentlink dot com])
+AC_INIT([waveform-resource],[0.2.7],[labs at adjacentlink dot com])
 
 AC_CONFIG_SRCDIR([waveform_resource])
 
